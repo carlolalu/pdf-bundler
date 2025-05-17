@@ -1,6 +1,7 @@
 use anyhow::{Context, Result, anyhow};
 use clap::Parser;
 use std::path::PathBuf;
+use std::fs;
 
 /// A program to execute `pdfunite` on a folder with maximum 3 levels and obtain a PDF-file with a ToC of all the tree.
 #[derive(Parser, Debug)]
@@ -21,4 +22,11 @@ fn main() -> Result<()> {
     println!("Your entries are: {:?}", entries);
 
     Ok(())
+}
+
+
+fn validate_file(file:) -> Result<()> {
+
+    // file ending is `pdf`
+    
 }
