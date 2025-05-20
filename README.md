@@ -10,9 +10,3 @@ It would be good also to have the same idea, but with 2 or 3 levels of folders/f
 
 I also found that there is a command line tool which is more or less the opposite of what I am doing: https://github.com/einoko/pdf-toc-splitter
 
-## Solution
-
-Online there are tools to manage pdfs (e.g. [`HandyOutliner`](https://handyoutlinerfo.sourceforge.net/)), but they are not automatised. Thus I would need a script which takes all pdf files in a folder, unites them, and create manually an index for the obtained file signing at which page does the n-th file start. The solution is not practical, I think it is thus better to write a tool which unites the files with `pdfunite` and index the output with `pdf.tocgen`. 
-
-For the `extra` part I have an idea: gather the file names and pages, and then write a Markdown file with the index, and convert it to pdf with the usual `pandoc` or similar, and append it in the beginning of the document.
-
