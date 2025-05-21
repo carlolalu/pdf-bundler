@@ -598,6 +598,7 @@ dependencies = [
  "anyhow",
  "clap",
  "lopdf",
+ "rand",
 ]
 
 [[package]]
