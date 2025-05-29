@@ -26,11 +26,9 @@ fn main() -> Result<()> {
 
 #[cfg(test)]
 mod test {
-    use anyhow::Result;
+    use anyhow::{Result, anyhow};
     use lopdf::{
-        self, Document, Object, Stream,
-        content::{Content, Operation},
-        dictionary,
+        self, content::{Content, Operation}, dictionary, Document, Object, Outline, Stream, Destination
     };
 
     pub fn craft_random_text_of_len(char_length: usize) -> String {
@@ -125,5 +123,66 @@ mod test {
     #[test]
     fn generate_basic_pdf() -> Result<()> {
         generate_basic_pdf_with("Basic Dok", 30)
+    }
+
+    fn generate_trivially_outlined_pdf_with(doc_name: &str, pages: u8) -> Result<()> {
+        let basic_doc = generate_basic_pdf_with(doc_name, pages)?;
+
+        // todo: this choice of a hard coded path could be done much much better
+        let document = Document::load("test/pdfs/example.pdf")?;
+
+        let mut outlined_document = document.clone();
+
+        // todo: this is the first manual version, but there must be a better way to 
+        // do this, otherwise lopdf would not propose types as `Destination` and `Outline`
+
+
+        // let destinations: Vec<_> = (1..pages).map(|page_num| vec![page_num.into(), "Fit".into()]).collect();
+
+        // let outlines_id = outlined_document.new_object_id();
+
+        // let last_id = outlined_document.new_object_id();
+
+        // let first_id = outlined_document.add_object(dictionary!{
+        //     "Title" => "Page 1",
+        //     "Parent" => outlines_id,
+        //     "Next" => last_id,
+        //     "Dest" => destinations[0].clone(),
+        // });
+
+        // outlined_document.objects.insert(last_id, Object::Dictionary(dictionary!{
+        //     "Title" => "Page last",
+        //     "Parent" => outlines_id,
+        //     "Prev" => first_id,
+        //     "Dest" => destinations[2].clone(),
+        // }));
+
+        
+        // let outlines = dictionary!{
+        //     "Type" => "Outlines",
+        //     "First" => first_id,
+        //     "Last" => last_id,
+        //     "Count" => pages,
+        // };
+
+        // outlined_document.objects.insert(outlines_id, Object::Dictionary(outlines.clone()));
+
+        // let catalog = outlined_document.catalog_mut()?;
+
+        // catalog.set("Outlines", outlines_id);
+        
+        // outlined_document.save("test/pdfs/example_outlined.pdf")?;
+
+        Ok(())
+    }
+
+    #[test]
+    fn generate_trivially_outlined_pdf() -> Result<()> {
+        let doc_name = "name";
+        let pages = 16;
+
+        generate_trivially_outlined_pdf_with(doc_name, pages)?;
+
+        Ok(())
     }
 }
